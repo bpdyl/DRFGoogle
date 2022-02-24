@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                background-color: #33235f;
+            }
+            
+            h3 {
+                text-align: center;
+                padding: 50px;
+                color: rgb(199, 157, 171);
+            }
+        </style>
+        <title>Complete Profile</title>
+    </head>
+
+    <body background="">
+        <div class="container">
+            <h3>Complete your profile</h3>
+            <form action="{% url 'update-user-profile' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-control">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" {% if request.user.first_name != None %}value="{{ request.user.first_name }}" {% else %} value="" {% endif %}>
+                </div>
+
+                <br>
+                <div class="form-control">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" {% if request.user.last_name != None %}value="{{ request.user.last_name }}" {% else %} value="" {% endif %}>
+                </div>
+                <br>
+                <div class="form-control">
+                    <label for="address">Address</label>
+                    <input type="text" name="address" value="{{u.0.address}}">
+                </div>
+                <br>
+                <div class="form-control">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="number" name="phone_number" value="{{u.0.phone_number}}">
+                </div>
+                <br>
+                <div class="form-control">
+                    <label for="gender">Gender</label>
+                    <input type="radio" name="gender" value="Male" {% if request.user.gender == "Male"%} checked {% endif %}>Male
+                    <input type="radio" name="gender" value="Female" {% if request.user.gender == "Female"%} checked {% endif %}>Female
+                    <input type="radio" name="gender" value="Others" {% if request.user.gender == "Others"%} checked {% endif %}>Others
+                </div>
+                <br>
+                <div class="form-control">
+                    <label for="interest">Interest</label>
+                    <select name="interest" id="">
+                <option value="IT and Networks">IT and Networks</option>
+                <option value="UI/UX">UI/UX</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Devops">Devops</option>
+            </select>
+                </div>
+                <br>
+
+                <div class="form-control">
+                    <p>Current image</p>
+                    <img src="{{request.user.get_photo_url}}" alt="" srcset="">
+                    <label for="profile_image">Profile Image</label>
+                    <input type="file" name="profile_image">
+                </div>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </body>
+
+    </html>
